@@ -1,18 +1,16 @@
 import HomePage from "@/components/home";
-
+import HomePage2 from "@/components//home/home2";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-// import { getUserData } from "@/lib/getUserRole";
+
 export default async function Home() {
   const session = await getServerSession();
-  // const userRole = getUserData(session?.user?.role);
 
   console.log(session?.user);
-
-  // const date = new Date();
-  // const amOrpm = date.getHours() >= 12 ? "مساء الخير يا" : "صباح الخير يا";
-  if (session?.user)
-    redirect("/dashboard");
-
+  
+  if (session){
+    return <HomePage2 name={session.user.name ?? ""} image={session.user.image ?? ""} role={session.user.role ?? "" }/>
+  }
+  // otherwise display the home page <landing page || index || entrypoint>
   return <HomePage />;
+
 }

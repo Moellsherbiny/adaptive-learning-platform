@@ -13,7 +13,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut } from "next-auth/react";
 
-const Navbar = ({ name, image, role }: { name: string; image: string; role: "student" | "teacher" }) => {
+const Navbar = ({ name, image, role }: { name: string; image: string; role:string }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   console.log(role)
   const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
@@ -21,18 +21,19 @@ const Navbar = ({ name, image, role }: { name: string; image: string; role: "stu
   const links = role === "teacher"
     ?
     [
-      { href: "/dashboard", label: "لوحة القيادة" },
+      { href: "/dashboard", label: "لوحة التحكم" },
       { href: "/teacher/courses", label: "الدورات" },
       { href: "/teacher/students", label: "الطلاب" },
     ]
     : [
-      { href: "/dashboard", label: "لوحة القيادة" },
-      { href: "/student/courses", label: "كورساتي" },
+      { href: "/dashboard", label: "لوحة التحكم" },
+      { href: "/student/courses", label: "الدورات التعليمية" },
+      { href: "/student/my-courses", label: "دوراتي" },
       
     ];
 
   return (
-    <nav className="bg-gray-50 p-4 text-primary shadow-md">
+    <nav className=" p-4 text-primary shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="order-1">

@@ -3,6 +3,7 @@ import { Alexandria, Cairo } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { UserPreferenceProvider } from "@/context/UserPreferencesContext";
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
@@ -18,8 +19,8 @@ const cairo = Cairo({
 
 
 export const metadata: Metadata = {
-  title: "Dr.Mai Badran",
-  description: "Dr.mai Badran Master Degree Project",
+  title: "Mai Badran",
+  description: "Mai Badran Master Degree Project",
   icons: {
     icon: "/icon?<generated>",
   },
@@ -43,7 +44,10 @@ export default function RootLayout({ children,
           enableSystem
           disableTransitionOnChange
         >
+          <UserPreferenceProvider>
+
           {children}
+          </UserPreferenceProvider>
         </ThemeProvider>
         <Toaster />
       </body>

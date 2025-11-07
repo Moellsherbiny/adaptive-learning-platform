@@ -109,6 +109,7 @@ model Course {
   imagePrompt    String?
   youtubeQuery   String?
   generatedImage String?
+  generatedContent Json?
   lessons        Json?
   videos         Json?
   createdAt      DateTime     @default(now())

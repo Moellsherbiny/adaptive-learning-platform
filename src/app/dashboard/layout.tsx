@@ -1,12 +1,6 @@
 import React from 'react'
-import { redirect } from 'next/navigation';
-import { getUserData } from '@/lib/getUserData';
 
-function layout({ children }: { children: React.ReactNode }) {
-  const user = getUserData();
-  if (!user) {
-    redirect('/');
-  }
+async function layout({ children }: { children: React.ReactNode }) {
 
   return (
     <main>{children}</main>

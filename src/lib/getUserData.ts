@@ -21,6 +21,7 @@ export async function getUserData() {
       email: user.email,
       image: user.image ?? "/default-avatar.png",
       role: user.role,
+      contentPreferences: user.contentPreferences
     };
   } catch (error) {
     console.error(error);

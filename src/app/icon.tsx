@@ -24,7 +24,7 @@ export default function Icon() {
           color: 'white',
         }}
       >
-        Dr
+        M
       </div>
     ),
     // ImageResponse options

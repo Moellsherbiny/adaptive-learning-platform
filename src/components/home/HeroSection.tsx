@@ -19,11 +19,10 @@ export default function HeroSection() {
           <p className="text-xl font-regular ">
             اكتشف الآن تجربة تعلم من المستقبل بين يديك
           </p>
-
           <div className="mt-8 w-full">
             <Button variant="default" className="bg-secondary text-primary w-full md:w-auto mb-8 md:mb-0  md:ml-10" >
-              <Link href="/auth/signup" >
-                البدء الآن
+              <Link href="/dashboard" >
+               لوحة التحكم
               </Link>
             </Button>
             <Button variant="outline" className="bg-transparent text-secondary w-full md:w-auto">

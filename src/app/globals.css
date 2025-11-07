@@ -97,3 +97,49 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @keyframes crayon {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 100% 100%;
+    }
+  }
+
+  .animate-crayon {
+    animation: crayon 20s linear infinite;
+    background-size: 200% 200%;
+  }
+
+  .crayon-purple {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #f3e8ff,
+      #f3e8ff 4px,
+      #e9d5ff 4px,
+      #e9d5ff 8px
+    );
+  }
+
+  .crayon-green {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #dcfce7,
+      #dcfce7 4px,
+      #bbf7d0 4px,
+      #bbf7d0 8px
+    );
+  }
+
+  .crayon-blue {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #dbeafe,
+      #dbeafe 4px,
+      #bfdbfe 4px,
+      #bfdbfe 8px
+    );
+  }
+}

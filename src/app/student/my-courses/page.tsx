@@ -32,7 +32,7 @@ export default async function MyCoursesPage() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {enrollments.map(({ course }) => (
-            <div key={course.id} className="border p-4 rounded-lg shadow-md bg-white flex flex-col text-right">
+            <div key={course.id} className="border p-4 rounded-lg shadow-md  flex flex-col text-right">
 
               <Image
                 src={getImageUrl(course.generatedImage || "") || "/default-course.png"}

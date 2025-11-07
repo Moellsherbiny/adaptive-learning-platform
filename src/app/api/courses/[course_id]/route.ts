@@ -25,6 +25,7 @@ export async function GET(request: Request, data: { params: Params }) {
         updatedAt: true,
         youtubeQuery: true,
         generatedImage: true,
+        generatedContent:true,
         lessons: true,
       },
     });

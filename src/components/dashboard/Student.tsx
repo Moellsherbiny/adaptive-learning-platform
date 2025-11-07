@@ -17,7 +17,7 @@ const StudentDashboard = async () => {
       path: "/student/courses",
     },
     {
-      title: "ملاحظات",
+      title: "ملاحظات المعلم",
       icon: <MessageCircle className="w-8 h-8 text-yellow-500" />,
       path: "/student/feedback",
     },
@@ -25,7 +25,7 @@ const StudentDashboard = async () => {
   ];
 
   const user = await getUserData();
-  const timeDayOrNight = new Date().getHours() > 18 ? "صباح" : "مساء";
+  const timeDayOrNight = new Date().getHours() < 12 ? "صباح" : "مساء";
   const greeting = ` ${timeDayOrNight} الخير ${user.name?.split(' ')[0] ?? 'User'}`;
   return (
     <div dir="rtl" className="bg-gray-100 min-h-screen">
@@ -41,7 +41,7 @@ const StudentDashboard = async () => {
                   <CardTitle>{link.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-500">إدارة {link.title} بكفاءة.</p>
+                  <p className="text-sm text-gray-500">إدارة {link.title}.</p>
                 </CardContent>
               </Card>
             </Link>

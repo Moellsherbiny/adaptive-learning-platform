@@ -14,6 +14,7 @@ import defaultImg from '@/assets/course-default.png'
 import Image from 'next/image'
 import Markdown from 'react-markdown'
 
+
 type Material = {
   id: string
   name: string
@@ -57,6 +58,10 @@ type Enrollment = {
   progress: number
 }
 
+interface Content {
+  title: string;
+  content: string
+}
 type Course = {
   id: string
   title: string
@@ -70,6 +75,7 @@ type Course = {
   imagePrompt?: string | null
   youtubeQuery?: string | null
   generatedImage?: string | null
+  generatedContent?: Content[] | null
   createdAt: string
   updatedAt: string
   teacherId: string
@@ -83,7 +89,6 @@ export default function CourseViewPage() {
   const { courseId } = useParams<{ courseId: string }>()
 
   const [course, setCourse] = useState<Course | null>(null)
-
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('overview')
 
@@ -122,6 +127,8 @@ export default function CourseViewPage() {
     )
   }
 
+  const content: Content[] | null | undefined  = course?.generatedContent ;
+  console.log(typeof course?.generatedContent);
   if (!course) {
     return (
       <div className="container py-8 text-center" dir="rtl">
@@ -132,14 +139,14 @@ export default function CourseViewPage() {
       </div>
     )
   }
-
+  console.log(Array(course.generatedContent))
   // Helper functions to safely handle null/undefined values
   const safeSplit = (str?: string | null, delimiter: string = ',') =>
     str ? str.split(delimiter).filter(Boolean) : []
 
   const safeGoals = (goals?: string | null) =>
     goals ? goals.split('\n').filter(Boolean) : []
-  
+
   const sortedLessons = Array.isArray(course.lessons)
     ? [...course.lessons].sort((a, b) => a.order - b.order)
     : []
@@ -406,6 +413,14 @@ export default function CourseViewPage() {
                   <p>لا يوجد محتوى لهذه الدورة بعد</p>
                 </div>
               )}
+            <div>
+              {content?.map((section: Content, index: number) => (
+        <div key={index} className="mb-8">
+          <h2 className="text-xl font-semibold mb-2 text-right">{section.title}</h2>
+          <p className="text-right text-gray-700 whitespace-pre-line">{section.content}</p>
+        </div>
+      ))}
+            </div>
             </CardContent>
           </Card>
         </TabsContent>

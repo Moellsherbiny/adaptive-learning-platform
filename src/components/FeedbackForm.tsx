@@ -21,7 +21,7 @@ export default function FeedbackForm({ teacherId, studentId }: FeedbackFormProps
     try {
       const payload = { teacherId, studentId, feedback };
       // نفترض وجود نقطة نهاية API على /feedback/create لتخزين الملاحظات
-      await axiosInstance.post("/feedback/create", payload);
+      await axiosInstance.post("/feedback", payload);
       toast.success("تم إرسال الملاحظات بنجاح!");
       router.push("/teacher/feedback");
     } catch (error) {
