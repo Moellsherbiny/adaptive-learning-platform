@@ -170,9 +170,6 @@ const onSubmit = async (data: TestimonialFormValues) => {
         >
           {isSubmitting ? "جاري الإرسال..." : "إرسال"}
         </Button>
-        <Button>
-          Delete
-        </Button>
       </form>
     </Form>
   );
