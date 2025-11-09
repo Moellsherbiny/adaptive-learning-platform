@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Alexandria, Cairo } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserPreferenceProvider } from "@/context/UserPreferencesContext";
 import Footer from "@/components/Footer";
@@ -44,19 +43,12 @@ export default function RootLayout({ children,
       <body
         className={`${alexandria.variable} ${cairo.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
           <UserPreferenceProvider>
           <AppLayout />
           <DynamicBreadcrumb/>
           {children}
           <Footer/>
           </UserPreferenceProvider>
-        </ThemeProvider>
         <Toaster />
       </body>
     </html>
