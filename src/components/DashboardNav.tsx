@@ -29,6 +29,8 @@ const Navbar = ({ name, image, role }: { name: string; image: string; role: stri
         { href: "/testimonials", label: "قيم تجربتك" },
       ];
 
+  if(!name)
+    return null
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="container mx-auto px-4 lg:px-8">
