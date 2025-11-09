@@ -29,7 +29,6 @@ export default function GenerateCourseForm({ teacherId }: { teacherId: string })
   const [goals, setGoals] = useState("");
   const [keywords, setKeywords] = useState("");
 
-  // حالة واجهة المستخدم
   const [loading, setLoading] = useState(false);
   const [courseStatus, setCourseStatus] = useState(""); // مثل "generating" أو "created"
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

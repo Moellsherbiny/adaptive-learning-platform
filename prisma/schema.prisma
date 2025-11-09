@@ -172,3 +172,13 @@ model StudentAnalysis {
   updatedAt DateTime @updatedAt
   student   User     @relation(fields: [studentId], references: [id])
 }
+
+model Testimonial {
+  id         Int      @id @default(autoincrement())
+  name       String       
+  university String?       @default("Damietta University")
+  content    String
+  rating     Int?          
+  avatar     String?       
+  createdAt  DateTime @default(now())
+}

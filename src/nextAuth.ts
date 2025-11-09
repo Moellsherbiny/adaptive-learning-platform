@@ -94,7 +94,7 @@ export const authOptions = NextAuth({
         token.name = user.name;
         token.email = user.email;
         token.image = user.image;
-        token.role = user.role; // Attach role from DB/user object
+        token.role = user.role; 
       } else if (token.email) {
         // If token exists without role, fetch it from DB
         const existingUser = await prisma.user.findUnique({

@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
+import { getUserData } from "@/lib/getUserData";
 
 export async function GET() {
-  return NextResponse.json({ message: "Hello, Next.js!" });
+  const user = await getUserData();
+  
+  return NextResponse.json({ data: user });
 }

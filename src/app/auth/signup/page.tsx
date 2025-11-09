@@ -1,11 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { FcGoogle } from "react-icons/fc";
 import { ArrowLeft } from "lucide-react";
 import Logo from "@/components/Logo";
@@ -16,107 +17,178 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(false);
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!name.trim()) newErrors.name = "من فضلك أدخل الاسم الكامل";
+    if (!email) newErrors.email = "من فضلك أدخل البريد الإلكتروني";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      newErrors.email = "البريد الإلكتروني غير صالح";
+
+    if (!password) newErrors.password = "من فضلك أدخل كلمة المرور";
+    else if (password.length < 6)
+      newErrors.password = "كلمة المرور يجب أن تكون 6 أحرف على الأقل";
+
+    if (!confirmPassword)
+      newErrors.confirmPassword = "يرجى تأكيد كلمة المرور";
+    else if (password !== confirmPassword)
+      newErrors.confirmPassword = "كلمتا المرور غير متطابقتين";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast("حدث خطأ", {
-        description: "كلمتا المرور غير متطابقتين",
+    if (!validateForm()) return;
 
-      })
-      return;
-    }
-    // Call your signup API endpoint; adjust URL and logic as needed.
+    setLoading(true);
     try {
       const res = await axiosInstance.post("/auth/register", {
-
-        name, email, password
+        name,
+        email,
+        password,
       });
-      if (res.status !== 200) toast("الرجاء المحاولة مرة اخري مع بريد الكتروني اخر");
-      toast("تم إنشاء الحساب بنجاح");
-      // Optionally, auto-login or redirect to sign in page:
-      signIn("credentials", { email, password });
-    } catch (error) {
-      console.error(error);
-      toast("حدث خطأ أثناء إنشاء الحساب")
+
+      if (res.status === 200 || res.status === 201) {
+        toast.success("تم إنشاء الحساب بنجاح");
+        await signIn("credentials", { email, password });
+      } else {
+        toast.error("حدث خطأ، حاول مرة أخرى");
+      }
+    } catch (error: any) {
+      const msg =
+        error?.response?.data?.message ||
+        "حدث خطأ أثناء إنشاء الحساب. حاول لاحقًا.";
+      toast.error(msg);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4" dir="rtl">
-      <Logo />
-      <div className="w-full max-w-xl bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold mb-6 text-center">إنشاء حساب جديد</h1>
-        <form onSubmit={handleSignUp} className="space-y-4">
-          <div className="flex justify-between items-center">
-            <Label htmlFor="name" className="min-w-32 inline-block">الاسم</Label>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-200 p-4"
+      dir="rtl"
+    >
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg transition-transform duration-300 hover:scale-[1.01]">
+        {/* Header */}
+        <div className="flex flex-col items-center mb-8">
+          <Logo />
+          <h1 className="text-3xl font-semibold text-gray-800 mt-4">إنشاء حساب جديد</h1>
+          <p className="text-gray-500 text-sm mt-1">ابدأ رحلتك معنا 🚀</p>
+        </div>
+
+        {/* Form */}
+        <form onSubmit={handleSignUp} className="space-y-5">
+          {/* Name */}
+          <div className="flex flex-col space-y-1">
+            <Label htmlFor="name">الاسم الكامل</Label>
             <Input
               type="text"
               id="name"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="اسمك كاملا هنا"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
+              className={`py-2 ${errors.name ? "border-red-500 focus:ring-red-500" : ""}`}
             />
+            {errors.name && (
+              <span className="text-red-500 text-sm">{errors.name}</span>
+            )}
           </div>
-          <div className="w-full flex justify-between items-center ">
-            <Label htmlFor="email" className="min-w-32 inline-block">البريد الإلكتروني</Label>
+
+          {/* Email */}
+          <div className="flex flex-col space-y-1">
+            <Label htmlFor="email">البريد الإلكتروني</Label>
             <Input
               type="email"
               id="email"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="example@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
+              className={`py-2 ${errors.email ? "border-red-500 focus:ring-red-500" : ""}`}
             />
+            {errors.email && (
+              <span className="text-red-500 text-sm">{errors.email}</span>
+            )}
           </div>
-          <div className="flex justify-between items-center">
-            <Label htmlFor="password" className="min-w-32 inline-block">كلمة المرور</Label>
+
+          {/* Password */}
+          <div className="flex flex-col space-y-1">
+            <Label htmlFor="password">كلمة المرور</Label>
             <Input
               type="password"
               id="password"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
+              className={errors.password ? "border-red-500 focus:ring-red-500" : ""}
             />
+            {errors.password && (
+              <span className="text-red-500 text-sm">{errors.password}</span>
+            )}
           </div>
-          <div className="flex justify-between items-center">
-            <Label htmlFor="confirmPassword" className="min-w-32 inline-block">تأكيد كلمة المرور</Label>
+
+          {/* Confirm Password */}
+          <div className="flex flex-col space-y-1">
+            <Label htmlFor="confirmPassword">تأكيد كلمة المرور</Label>
             <Input
               type="password"
               id="confirmPassword"
-              className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="••••••••"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              required
+              className={
+                errors.confirmPassword ? "border-red-500 focus:ring-red-500" : ""
+              }
             />
+            {errors.confirmPassword && (
+              <span className="text-red-500 text-sm">
+                {errors.confirmPassword}
+              </span>
+            )}
           </div>
-          <Button variant="default" type="submit" className="w-full">
-            إنشاء الحساب
+
+          {/* Submit */}
+          <Button
+            variant="default"
+            type="submit"
+            disabled={loading}
+            className="w-full text-lg transition-colors duration-200 hover:bg-blue-600"
+          >
+            {loading ? "جاري إنشاء الحساب..." : "إنشاء الحساب"}
           </Button>
         </form>
-        <div className="flex items-center my-4">
+
+        {/* Divider */}
+        <div className="flex items-center my-6">
           <div className="flex-grow h-px bg-gray-300"></div>
-          <span className="mx-2 text-gray-500">أو</span>
+          <span className="mx-3 text-gray-500 text-sm">أو</span>
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
+
+        {/* Google Sign Up */}
         <Button
           onClick={() => signIn("google")}
           variant="outline"
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center gap-2 border-gray-300 hover:bg-gray-50 transition-all"
         >
+          <FcGoogle className="text-2xl" />
           التسجيل بواسطة جوجل
-          <FcGoogle />
         </Button>
-        <Button variant="link" className="mt-4 w-full ">
-          <Link href="/auth/signin" className="w-32 flex justify-evenly  items-center">
-            <span>
-              تسجيل الدخول
-            </span>
-            <ArrowLeft />
+
+        {/* Link to Sign in */}
+        <div className="text-center mt-6">
+          <Link
+            href="/auth/signin"
+            className="text-blue-600 hover:text-blue-800 flex justify-center items-center gap-1 transition-colors"
+          >
+            تسجيل الدخول <ArrowLeft className="w-4 h-4" />
           </Link>
-        </Button>
+        </div>
       </div>
     </div>
   );

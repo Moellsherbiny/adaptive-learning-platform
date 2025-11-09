@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Image from "next/image";
 import testImage from "@/test.jpg";
 import HeroSection from "./HeroSection";
@@ -9,7 +7,6 @@ import FeaturesSection from "./FeaturesSection";
 export default function HomePage() {
   return (
     <div>
-      <Navbar />
       <main>
         <HeroSection/>
         {/* Second Section: Repeated Pattern */}
@@ -54,7 +51,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

@@ -30,7 +30,6 @@ export default function AboutPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-background to-muted/20" dir="rtl">
         <section className="container py-12 md:py-24">
           <div className="max-w-3xl mx-auto text-center">

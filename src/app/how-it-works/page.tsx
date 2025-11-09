@@ -64,7 +64,6 @@ export default function HowItWorksPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-background to-muted/20" dir="rtl">
         {/* Hero Section */}
         <section className="container py-12 md:py-24">

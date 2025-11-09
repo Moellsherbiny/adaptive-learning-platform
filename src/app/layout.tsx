@@ -4,6 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { UserPreferenceProvider } from "@/context/UserPreferencesContext";
+import Footer from "@/components/Footer";
+import DynamicBreadcrumb from "@/components/DynamicBreadcrumb";
+import AppLayout from "@/components/AppLayout";
+export const dynamic = "force-dynamic";
 
 const alexandria = Alexandria({
   variable: "--font-alexandria",
@@ -30,6 +34,8 @@ export default function RootLayout({ children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
+ 
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
@@ -45,8 +51,10 @@ export default function RootLayout({ children,
           disableTransitionOnChange
         >
           <UserPreferenceProvider>
-
+          <AppLayout />
+          <DynamicBreadcrumb/>
           {children}
+          <Footer/>
           </UserPreferenceProvider>
         </ThemeProvider>
         <Toaster />
