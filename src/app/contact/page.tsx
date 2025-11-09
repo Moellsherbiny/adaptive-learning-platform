@@ -42,7 +42,7 @@ export default function ContactPage() {
     const subject = encodeURIComponent(`رسالة من ${name}`);
     const body = encodeURIComponent(`البريد الإلكتروني: ${email}\n\nالرسالة:\n${message}`);
 
-    window.location.href = `mailto:your_email@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:mai_badran@du.edu.eg?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -110,7 +110,7 @@ export default function ContactPage() {
 
             {success && (
               <p className="text-green-600 text-center text-sm mt-2">
-                ✅ تم التحقق من البيانات بنجاح، جاري فتح البريد لإرسال الرسالة...
+                تم التحقق من البيانات بنجاح، جاري فتح البريد لإرسال الرسالة...
               </p>
             )}
           </div>
